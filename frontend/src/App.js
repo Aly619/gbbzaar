@@ -30,6 +30,7 @@ import { loadUser } from './store/actions/userActions';
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 import ProtectedRoute from './Components/protectedRoute/protectedRoute';
 import UnProtectedRoute from './Components/protectedRoute/UnProtectedRoute';
+import Loader from './Components/Loader/Loader';
 
 
 
@@ -103,6 +104,7 @@ function App() {
           <EditPostProduct/>
         </ProtectedRoute>}/>
         <Route path='/aboutus' element={<AboutUs/>} />
+        <Route path='/loader' element={<Loader/>}/>
 
 
       

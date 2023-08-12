@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { register } from '../../store/actions/userActions'
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
 import { CLEAR_ERRORS } from '../../store/constants/userConstants'
+import BtnLoader from '../../Components/BtnLoader/BtnLoader'
 const SignIn = ({isLoggedIn, setIsloggedIn}) => {
     const dispatch = useDispatch()
     const {error,isAuthenticated,loading} = useSelector(state => state.token) 
@@ -102,7 +103,7 @@ const SignIn = ({isLoggedIn, setIsloggedIn}) => {
 
                         </div>
 
-                        <button className='submit-btn' type='submit'>{loading ? 'Loading':'Sign Up'}</button>
+                        <button disabled={loading?true:false} className='submit-btn' type='submit'>{loading ? <BtnLoader/>:'Sign Up'}</button>
                     </form>
 
                     </section>

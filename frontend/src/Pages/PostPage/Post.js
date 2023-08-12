@@ -10,6 +10,7 @@ import { useDispatch,useSelector } from 'react-redux'
 
 import PostProduct from '../../Components/PostProduct/PostProduct'
 import { getSingleArt } from '../../store/actions/artActions'
+import Loader from '../../Components/Loader/Loader'
 
 const Post = () => {
 
@@ -30,7 +31,7 @@ const Post = () => {
 
       {
         loading?(
-          <><h1>loading</h1></>
+          <><Loader/></>
         ):(
           <>
           <section className="post-section">

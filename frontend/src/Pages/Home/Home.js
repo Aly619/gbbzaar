@@ -28,7 +28,7 @@ import hp6 from '../../Components/LandingCard/hp6.png'
 import propic from '../../Components/LandingCard/propic.png'
 import handmadehero from '../../Images/handmadehero.png'
 import historicalhero from '../../Images/historicalheroimg.png'
-
+import Loader from '../../Components/Loader/Loader'
 import Navbar from '../../Components/Navbar/Navbar'
 import LandingCard from '../../Components/LandingCard/LandingCard'
 import { Link } from 'react-router-dom'
@@ -44,7 +44,7 @@ const Home = ({ isLoggedIn, setIsloggedIn }) => {
     const {isAuthenticated} = useSelector(state => state.token)
     const {user} = useSelector(state => state.user)
 
-    const {arts} = useSelector(state => state.arts)
+    const {arts,loading} = useSelector(state => state.arts)
  
 
     useEffect(()=>{
@@ -67,6 +67,7 @@ const Home = ({ isLoggedIn, setIsloggedIn }) => {
 
                         <div className="landing-hero-btn">
                             {
+                                
                                 !isAuthenticated && <Link to={'/signup'}><button className="get-btn">Get Started</button></Link>
 
                             }
@@ -118,9 +119,16 @@ const Home = ({ isLoggedIn, setIsloggedIn }) => {
 
                     <section className="community-cards">
                         {
-                            arts && arts.map((art,index)=>(
-                                <LandingCard user={user} handleDelete={()=>{}} art={art} landingimg={c1} landingheader="How to create desigining personas that start with empathy" profilepic={propic} username="John Birmingham" userdate="25 December 2019" />
-                            ))
+                            loading ?(
+                                <>
+                                <Loader/>
+                                </>
+                            ) :(<>
+                            {arts && arts.map((art,index)=>(
+                                <LandingCard user={user} handleDelete={()=>{}} art={art} landingimg={c1} landingheader="How to create desigining personas that start with empathy" profilepic={propic} username="John Birmingham" userdate="25 December 2019" key={index}/>
+                            ))}
+                            </>)
+                            
                         }
 
                         

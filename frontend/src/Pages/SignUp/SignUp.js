@@ -15,8 +15,6 @@ const SignUp = ({ isLoggedIn, setIsloggedIn }) => {
 
     const navigate = useNavigate()
     const handleLogin = () => {
-        console.log('Form Submitted')
-        // console.log(formik.values.email,formik.values.password)
         dispatch(login(formik.values.email,formik.values.password))
     }
 

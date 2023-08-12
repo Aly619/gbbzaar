@@ -29,11 +29,9 @@ exports.createArt = async (req, res, next) => {
 
 
 exports.getSingleArt = async (req,res,next)=>{
-    console.log(req.params.id)
 
     try {
         const result = await Art.findOne({_id:req.params.id}).populate('user_id')
-        console.log(result)
         if(result){
             res.status(200).json({
                 success:true,
