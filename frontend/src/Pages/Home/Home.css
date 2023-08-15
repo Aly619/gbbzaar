@@ -45,8 +45,14 @@
 }
 .catogory-para{
     cursor: pointer;
+    
 }
-
+.catogory-para.active{
+    background: #31A0FA;
+    padding: 10px 30px;
+    border-radius: 30px;
+    color: #0B1334;
+}
 
 /* ------------------------Handmade-Arts------------------------- */
 .handmade-arts {

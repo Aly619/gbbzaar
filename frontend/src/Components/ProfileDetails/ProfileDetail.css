@@ -65,7 +65,7 @@
 }
 
 .profile-edit-btn {
-    margin-top: 30px;
+    transform: translateY(130px);
     width: 223px;
     height: 38px;
     background: #2D7DD7;

@@ -3,6 +3,7 @@ import { useNavigate,useLocation } from 'react-router-dom'
 const ProtectedRoute = ({ isAuthenticated,isEmailVerified, isAllDetails, children }) => {
     // console.log(isAuthenticated)
     const navigate = useNavigate();
+    
 
   useEffect(() => {
     if (!isAuthenticated) {

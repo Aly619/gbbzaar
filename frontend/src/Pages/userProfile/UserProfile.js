@@ -12,42 +12,55 @@ import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getUserArts } from '../../store/actions/artActions'
-import { loadUser } from '../../store/actions/userActions'
+import { getUser, loadUser } from '../../store/actions/userActions'
+import { useParams,useNavigate } from 'react-router-dom'
 
-const Profile = () => {
+import Loader from '../../Components/Loader/Loader'
+const UserProfile = () => {
   const [isLoggedIn, setIsloggedIn] = useState(true)
-  const loggedUser = useSelector(state => state.user)
+  const { user,loading } = useSelector(state => state.getUser)
+  const loggesUser = useSelector(state => state.user)
   const { arts } = useSelector(state => state.userArts)
+  
+  console.log(loggesUser)
+
+  const {id} = useParams()
+  const navigate = useNavigate()
+  console.log(id)
   // console.log(arts)
   const dispatch = useDispatch()
- useEffect(()=>{
-  dispatch(loadUser)
-  if(loggedUser.user){
 
-    dispatch(getUserArts(loggedUser.user._id))
-    // dispatch(loadUser())
-    
-  }
- },[dispatch,loggedUser.user])
+  useEffect(()=>{
+    if(loggesUser.user){
+      if(loggesUser.user._id === id){
+        navigate('/profile')
+      }
+    }
+  },[id])
+ useEffect(()=>{
+    dispatch(getUserArts(id))
+    dispatch(getUser(id))
+
+ },[dispatch,id])
   return (
     <>
       {
-        loggedUser.user ? (
+        user ? (
           <>
             <Navbar isLoggedIn={isLoggedIn} setIsloggedIn={setIsloggedIn} />
 
             <section className="profile-section max-width-1440"style={{marginBottom:'200px'}}>
-              <ProfileDetail arts={arts} loggedUser={loggedUser} user={loggedUser.user} loading={loggedUser.loading} proheroimg={prohero} profiledetailsheading="GB Art Bazaar" profiledetailspara1="Skill Set" profiledetailspara2="Working place/ company" profiledetailspara3="company link here" profiledetailspara4="Address here" location={location} />
+              <ProfileDetail loggesUser={loggesUser} arts={arts} user={user} loading={loading} proheroimg={prohero} profilepicture={user.profileUrl} profiledetailsheading="GB Art Bazaar" profiledetailspara1="Skill Set" profiledetailspara2="Working place/ company" profiledetailspara3="company link here" profiledetailspara4="Address here" location={location} />
 
             </section>
 
 
             <Footer /></>
-        ) : (<><h1>Loading</h1></>)
+        ) : (<><Loader/></>)
       }
 
     </>
   )
 }
 
-export default Profile
+export default UserProfile

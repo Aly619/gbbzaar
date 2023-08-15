@@ -9,27 +9,42 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { updateUserData } from '../../store/actions/userActions'
 import { useNavigate } from 'react-router-dom'
+import BtnLoader from '../../Components/BtnLoader/BtnLoader'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import { UPDATE_USER_DETAIL_FAIL, UPDATE_USER_DETAIL_REQUEST } from '../../store/constants/userConstants'
 
 const EditProfileDetail = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {isAllDetails} = useSelector(state => state.token)
+    const {loading,error} = useSelector(state => state.updateUser)
     useEffect(()=>{
         if(isAllDetails){
             navigate('/profile')
         }
     },[dispatch,isAllDetails])
+
+    useEffect(()=>{
+      if(error){
+        Swal.fire({
+          icon: 'error',
+          title: 'Please fix the error above',
+          text: `${error}`
+        })
+      }
+    },[dispatch,error])
     const {user} = useSelector(state => state.user)
     const handleSubmit = async ()=>{
+        dispatch({type:UPDATE_USER_DETAIL_REQUEST})
         const myForm = new FormData()
         myForm.append('file',selectedImage)
         myForm.append('upload_preset','oha7na0l')
         myForm.append('cloud_name','drkf8to4g')
         try {
             const res = await axios.post('https://api.cloudinary.com/v1_1/drkf8to4g/image/upload',myForm)
-            console.log(res.data.url)
+            // console.log(res.data.url)
             const data = {
                 email:user.email,
                 wNumber:formik.values.wNumber.toString(),
@@ -41,7 +56,12 @@ const EditProfileDetail = () => {
 
             // window.location.reload()
         } catch (error) {
-            window.alert('Some error occured try again later')
+          dispatch({type:UPDATE_USER_DETAIL_FAIL,error:error.message})
+          Swal.fire({
+            icon: 'error',
+            title: 'Please fix the error above',
+            text: `Some error occured try again later`
+          })
         }
         // dispatch(updateUserData(myForm))
     }
@@ -153,7 +173,7 @@ const EditProfileDetail = () => {
                         <label htmlFor="address">Address</label>
                         <input type="text" id='address' name='address' placeholder='Enter Your Address' onChange={formik.handleChange} value={formik.values.address}/>
                     </div>
-                    <button type='submit' className='form-save-btn'>Save & Continue</button>
+                    <button type='submit' className='form-save-btn' disabled={loading?true:false}>{loading?<BtnLoader/>:'Save and Continue'}</button>
                 </div>
             </section>
             </form>

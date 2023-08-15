@@ -31,6 +31,7 @@ import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 import ProtectedRoute from './Components/protectedRoute/protectedRoute';
 import UnProtectedRoute from './Components/protectedRoute/UnProtectedRoute';
 import Loader from './Components/Loader/Loader';
+import UserProfile from './Pages/userProfile/UserProfile';
 
 
 
@@ -52,7 +53,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home isLoggedIn={isLoggedIn} setIsloggedIn={setIsloggedIn}/>} />
         <Route path='/landingpage' element={<LandingPage />} />
-        
+        <Route path='/profile/:id' element={<UserProfile/>}/>
         <Route path='/profile' element={<ProtectedRoute isAuthenticated={isAuthenticated} isEmailVerified={isEmailVerified} isAllDetails={isAllDetails}>
           <Profile/>
         </ProtectedRoute>} />

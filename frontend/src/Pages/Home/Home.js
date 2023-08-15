@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import '../Home/Home.css'
 import demo from '../LandingPage/demo.png'
 import heroimg from '../LandingPage/heroimg.png'
@@ -42,14 +42,15 @@ const Home = ({ isLoggedIn, setIsloggedIn }) => {
 
     const dispatch = useDispatch()
     const {isAuthenticated} = useSelector(state => state.token)
-    const {user} = useSelector(state => state.user)
+    const loggedUser = useSelector(state => state.user)
 
     const {arts,loading} = useSelector(state => state.arts)
- 
+    const [category,setCategory] = useState('All')
+    // designing
 
     useEffect(()=>{
-        dispatch(getAllArts())
-    },[dispatch])
+        dispatch(getAllArts(category))
+    },[dispatch,category])
 
     return (
         <>
@@ -93,12 +94,10 @@ const Home = ({ isLoggedIn, setIsloggedIn }) => {
 
                         <div className="community-catogory max-width-1440">
 
-                            <p className="catogory-para">All</p>
-                            <p className="catogory-para">Arts</p>
-                            <p className="catogory-para">Handicrafts</p>
-                            <p className="catogory-para">Designing</p>
-
-
+                            <p className={`catogory-para ${category === 'All'?'active':''}`} onClick={()=>setCategory('All')}>All</p>
+                            <p className={`catogory-para ${category === 'art'?'active':''}`} onClick={()=>setCategory('art')}>Arts</p>
+                            <p className={`catogory-para ${category === 'handicraft'?'active':''}`} onClick={()=>setCategory('handicraft')}>Handicrafts</p>
+                            <p className={`catogory-para ${category === 'designing'?'active':''}`} onClick={()=>setCategory('designing')}>Designing</p>
                         </div>
 
                   
@@ -124,9 +123,9 @@ const Home = ({ isLoggedIn, setIsloggedIn }) => {
                                 <Loader/>
                                 </>
                             ) :(<>
-                            {arts && arts.map((art,index)=>(
-                                <LandingCard user={user} handleDelete={()=>{}} art={art} landingimg={c1} landingheader="How to create desigining personas that start with empathy" profilepic={propic} username="John Birmingham" userdate="25 December 2019" key={index}/>
-                            ))}
+                            { arts && (arts.length > 0?arts.map((art,index)=>(
+                                loggedUser?.user?._id !== art?.user_id?._id && <LandingCard loggedUser={loggedUser} handleDelete={()=>{}} art={art} landingimg={c1} landingheader="How to create desigining personas that start with empathy" profilepic={propic} username="John Birmingham" userdate="25 December 2019" key={index}/>
+                            )):<><h1 style={{color:'#fff',fontSize:'20px'}}>No arts to show</h1></>)}
                             </>)
                             
                         }

@@ -19,6 +19,25 @@
     flex-direction: column;
 }
 
+.cat-label{
+    color: rgba(255, 255, 255, 0.2);
+    font-family: 'Urbanist';
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#optionValue{
+    background-color: #0B1334;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 18px;
+    margin-bottom: 70px;
+}
+#optionValue option{
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 18px;
+    font-family: 'Urbanist';
+}
+
 .upload-content-title {
     width: 697px;
     height: 62px;
@@ -130,4 +149,8 @@
     color: #FFFFFF;
     margin-bottom: 50px;
     cursor: pointer;
+}
+
+.upload-btn:disabled{
+    background: #b7d1ef;
 }

@@ -1,5 +1,5 @@
 const express = require('express')
-const { createUser, login, updateUserData, loadUser, verifyEmail, forgotPassword, forgotPasswordTokenVerify, forgetPasswordUpdate } = require('../controllers/userController')
+const { createUser, login, updateUserData, loadUser, verifyEmail, forgotPassword, forgotPasswordTokenVerify, forgetPasswordUpdate, getUser } = require('../controllers/userController')
 
 
 const router = express.Router()
@@ -12,5 +12,6 @@ router.route('/users/verify').post(verifyEmail)
 router.route('/users/forgot').post(forgotPassword)
 router.route('/users/forgot/verify').post(forgotPasswordTokenVerify)
 router.route('/users/forgot/update').put(forgetPasswordUpdate)
+router.route('/users/get').get(getUser)
 
 module.exports = router

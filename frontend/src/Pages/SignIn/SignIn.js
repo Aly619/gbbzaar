@@ -13,20 +13,35 @@ import { register } from '../../store/actions/userActions'
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector'
 import { CLEAR_ERRORS } from '../../store/constants/userConstants'
 import BtnLoader from '../../Components/BtnLoader/BtnLoader'
+import Swal from 'sweetalert2'
 const SignIn = ({isLoggedIn, setIsloggedIn}) => {
     const dispatch = useDispatch()
     const {error,isAuthenticated,loading} = useSelector(state => state.token) 
     const user = useSelector(state => state.user)
-    console.log(error)
-    // console.log(user)
 
     useEffect(()=>{
         if(error){
             if(error.code === 400){
-                window.alert('Please fill out all fields in correct format')
+                const errorArr = error.message.split(',')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please fix the errors above',
+                    text: `${errorArr.map((err)=> `${err}`)}`
+                  })
             }
             if(error.code === 409){
-                window.alert('User with this email already exists')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please fix the error above',
+                    text: `${error.message}`
+                  })
+            }
+            if(error.code === 403){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please fix the error above',
+                    text: `Can't send email right now , please check your internet connection or try again later`
+                  })
             }
             dispatch({type:CLEAR_ERRORS})
         }

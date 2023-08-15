@@ -90,3 +90,6 @@
 
 
 }
+.verification-content button:disabled{
+    background: #b7d1ef;
+}

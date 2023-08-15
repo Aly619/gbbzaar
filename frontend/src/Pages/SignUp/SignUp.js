@@ -11,6 +11,9 @@ import { useFormik } from 'formik'
 import { useDispatch,useSelector } from 'react-redux'
 import { login } from '../../store/actions/userActions'
 import {CLEAR_ERRORS} from '../../store/constants/userConstants'
+import BtnLoader from '../../Components/BtnLoader/BtnLoader'
+import Swal from 'sweetalert2'
+import Error from '../../Components/Error/Error'
 const SignUp = ({ isLoggedIn, setIsloggedIn }) => {
 
     const navigate = useNavigate()
@@ -27,19 +30,28 @@ const SignUp = ({ isLoggedIn, setIsloggedIn }) => {
     })
 
     const dispatch = useDispatch()
-    const {error,isAuthenticated} = useSelector(state => state.token) 
+    const {error,isAuthenticated,loading} = useSelector(state => state.token) 
     const user = useSelector(state => state.user)
-    console.log(error)
-    // console.log(user)
+    
 
     useEffect(()=>{
         if(error){
             if(error.code === 400){
-                window.alert('Please fill out all fields in correct format')
+                const errorArr = error.message.split(',')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please fix the error above',
+                    text: `${errorArr.map((err)=> `${err}`)}`
+                  })
             }
             if(error.code === 409){
-                window.alert('Wrong credentials')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please fix the error above',
+                    text: `${error.message}`
+                  })
             }
+            
             dispatch({type:CLEAR_ERRORS})
         }
         
@@ -87,7 +99,7 @@ const SignUp = ({ isLoggedIn, setIsloggedIn }) => {
 
                         
 
-                        <input className='signin-btn' type='submit' value={'Sign In'}/>
+                        <button disabled={loading?true:false} className='signin-btn' type='submit'>{loading ? <BtnLoader/>:'Sign In'}</button>
                 </form>
 
 

@@ -25,6 +25,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "render": "^0.1.4",
+    "sweetalert2": "^11.7.22",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
