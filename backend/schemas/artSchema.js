@@ -43,6 +43,9 @@ exports.orderSchema = Joi.object({
     userName: Joi.string().required().messages({
         'any.required':'Please enter your name',
     }),
+    productQuantity: Joi.string().required().messages({
+        'any.required':'Please enter product quantity',
+    }),
     email: Joi.string().required().email().messages({
         'any.required':'Please enter your email',
     }),

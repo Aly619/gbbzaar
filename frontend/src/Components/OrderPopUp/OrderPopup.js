@@ -12,6 +12,8 @@ const OrderPopup = ({ setShowPopup, user, id }) => {
       setLoading(true);
       const userData = {
         userName: values.userName,
+        productName: values.productName,
+        productQuantity:values.productQuantity,
         number: values.number,
         email: values.email,
         address: values.address,
@@ -45,6 +47,7 @@ const OrderPopup = ({ setShowPopup, user, id }) => {
       number: "",
       email: "",
       address: "",
+      productQuantity:''
     },
     onSubmit: handleOrder,
   });
@@ -54,13 +57,21 @@ const OrderPopup = ({ setShowPopup, user, id }) => {
         <div className="popup-inner">
           <h1>Order Now</h1>
           <form className="popup-form" onSubmit={handleSubmit}>
-            <input
+             <input
               type="text"
               id="userName"
               name="userName"
               value={values.userName}
               onChange={handleChange}
               placeholder="User Name"
+            />
+            <input
+              type="text"
+              id="productQuantity"
+              name="productQuantity"
+              value={values.productQuantity}
+              onChange={handleChange}
+              placeholder="Product Quantity"
             />
             <input
               type="text"

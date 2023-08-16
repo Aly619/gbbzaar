@@ -268,7 +268,7 @@ exports.orderArt = async(req,res,next)=>{
         return next(new ErrorHandler(errorMessages, 400))
     }
 
-    const {artId,address,email,userName,number,userEmail} = req.body
+    const {artId,address,email,userName,number,userEmail,productQuantity} = req.body
     const art = await Art.findById(artId)
     const mailOptions = {
       to: userEmail,
@@ -285,6 +285,7 @@ exports.orderArt = async(req,res,next)=>{
 
                 Title : ${art.title}
                 id : ${art._id}
+                quantity : ${productQuantity}
                 
       `,
     };
